@@ -113,7 +113,7 @@ for i, msg in enumerate(st.session_state.messages):
                     st.rerun()
             
             if current_feedback:
-                rating_text = " Helpful" if current_feedback == "thumbs_up" else "🔴 Unhelpful"
+                rating_text = " Helpful" if current_feedback == "thumbs_up" else " Unhelpful"
                 st.markdown(f"<p style='color:#b3b3b3; font-size:13px; margin-top:4px; margin-bottom:0;'><i>You rated this: <b>{rating_text}</b></i></p>", unsafe_allow_html=True)
 
 if user_input := st.chat_input("Type your message here..."):
