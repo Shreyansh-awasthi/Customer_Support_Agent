@@ -79,7 +79,6 @@ else:
         }
     ]
 
-# Main Canvas Header updated to Customer Support Agent
 st.markdown("""
     <div class="support-header">
         <h2 style='margin:0; padding-bottom:6px; color:#ffffff;'>💬 Customer Support Agent</h2>
@@ -95,24 +94,27 @@ for i, msg in enumerate(st.session_state.messages):
         
         if msg["role"] == "assistant" and i > 0:
             feedback_key = f"feedback_{st.session_state.thread_id}_{i}"
-            col1, col2, _ = st.columns([0.05, 0.05, 0.9])
+            col1, col2, _ = st.columns([0.2, 0.2, 0.6])
             current_feedback = msg.get("feedback", None)
             
             with col1:
-                if st.button("👍", key=f"up_{feedback_key}", help="Helpful"):
+                if st.button("👍 Helpful", key=f"up_{feedback_key}", use_container_width=True):
                     msg["feedback"] = "thumbs_up"
                     all_history[st.session_state.thread_id] = st.session_state.messages
                     save_local_history(all_history)
                     st.toast("Thank you for your feedback!", icon="✨")
+                    st.rerun()
             with col2:
-                if st.button("👎", key=f"down_{feedback_key}", help="Not Helpful"):
+                if st.button("👎 Unhelpful", key=f"down_{feedback_key}", use_container_width=True):
                     msg["feedback"] = "thumbs_down"
                     all_history[st.session_state.thread_id] = st.session_state.messages
                     save_local_history(all_history)
-                    st.toast("Feedback recorded. We'll improve!", icon="📝")
+                    st.toast("Feedback recorded. We'll improve!", icon="¼")
+                    st.rerun()
             
             if current_feedback:
-                st.caption(f"*You rated this:* `{'Helpful' if current_feedback == 'thumbs_up' else 'Not Helpful'}`")
+                rating_text = " Helpful" if current_feedback == "thumbs_up" else "🔴 Unhelpful"
+                st.markdown(f"<p style='color:#b3b3b3; font-size:13px; margin-top:4px; margin-bottom:0;'><i>You rated this: <b>{rating_text}</b></i></p>", unsafe_allow_html=True)
 
 if user_input := st.chat_input("Type your message here..."):
     st.session_state.messages.append({"role": "user", "content": user_input})
