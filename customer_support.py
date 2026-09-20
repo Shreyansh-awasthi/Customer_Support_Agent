@@ -14,7 +14,7 @@ llm = ChatGroq(
     model="qwen/qwen3.8-27b",
     temperature=0,
     api_key=os.getenv('GROQ_API_KEY'),
-    max_tokens=2000,
+    max_tokens=400,
     reasoning_effort=None
 )
 
